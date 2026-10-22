@@ -338,6 +338,17 @@
   }
   @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
 </style>
+<!-- Meta Pixel -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','905127119235018');fbq('track','PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=905127119235018&ev=PageView&noscript=1"/></noscript>
+<!-- End Meta Pixel -->
 </head>
 <body>
 
@@ -699,6 +710,7 @@
 <script>
   const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  document.querySelectorAll('.price-btn').forEach(a=>a.addEventListener('click',()=>{if(window.fbq)fbq('track','InitiateCheckout');}));
 
   const DEADLINE=new Date('2026-11-18T07:30:00'); // ← cambia por tu fecha límite real
   function tick(){const cd=document.getElementById('cd');if(!cd)return;const diff=DEADLINE-new Date();
@@ -716,7 +728,7 @@
     const btn=f.querySelector('button[type=submit]');btn.disabled=true;btn.textContent='Enviando…';
     try{
       const r=await fetch('https://formspree.io/f/xeaepaoq',{method:'POST',headers:{'Accept':'application/json'},body:new FormData(f)});
-      if(r.ok){f.style.display='none';ok.classList.add('show');}
+      if(r.ok){f.style.display='none';ok.classList.add('show');if(window.fbq)fbq('track','Lead');}
       else{btn.disabled=false;btn.textContent='Enviar y reservar';alert('No pudimos enviar tu solicitud. Intenta de nuevo o escríbenos.');}
     }catch(err){btn.disabled=false;btn.textContent='Enviar y reservar';alert('Hubo un problema de conexión. Intenta de nuevo.');}
   });
